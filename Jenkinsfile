@@ -1,29 +1,32 @@
+
 pipeline
 {
-agent none
-stages
-{
- stage('scm checkout')
- { agent { label: 'JAVA' }
-  steps { git branch: 'master', url: 'https://github.com/prakashk0301/mavenproject' }}
+  agent any
 
- stage('code compile')
- { agent { label 'JAVA' }
-steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true)  {
-	sh 'mvn compile'
- } }}
+  stages
+  {
+    stage('SCM Checkout')
+    {
+      steps
+      {
+        git branch : 'master', url: 'https://github.com/HarshGawade11/jenkins-build.git'
+      }
+    }
 
-  stage('execute unit test framework')
- {agent { label 'JAVA' }
-   steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true)  {
-	sh 'mvn test'
- } }}
+    stage('Validate the job')
+    {
+      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'Jdk-home', maven: 'MVN-home', mavenSettingsConfig: '', traceability: true) 
+      { sh 'mvn validate'}}
+      
+    }
 
-   stage('code build')
- {agent { label 'JAVA' }
-   steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true)  {
-	sh 'mvn clean -B -DskipTests package'
- } }}
 
-}
+    stage('print a message')
+    {
+      steps
+      {
+         sh 'echo this is pipeline type job'
+      }
+    }
+  }
 }
