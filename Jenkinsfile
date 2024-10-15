@@ -20,6 +20,13 @@ pipeline
       
     }
 
+    stage('complile code')
+    {
+      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'Jdk-home', maven: 'MVN-home', mavenSettingsConfig: '', traceability: true) 
+      { sh 'mvn compileS'}}
+      
+    }
+
 
     stage('print a message')
     {
