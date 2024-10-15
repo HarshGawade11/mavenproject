@@ -30,7 +30,7 @@ pipeline
     stage('Build Package')
     {
       steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'Jdk-home', maven: 'MVN-home', mavenSettingsConfig: '', traceability: true)
-      { sh 'mvn package'}}
+      { sh 'mvn clean -B -DskipTests package'}}
 
     }
 
