@@ -22,14 +22,18 @@ pipeline
 
     stage('Code testing')
     {
-      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'Jdk-home', maven: 'MVN-home', mavenSettingsConfig: '', traceability: true) 
-<<<<<<< HEAD
-      { sh 'mvn compile'}}
-=======
+      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'Jdk-home', maven: 'MVN-home', mavenSettingsConfig: '', traceability: true)
       { sh 'mvn test'}}
->>>>>>> 96f80f3a54981fe7eb1bfa80c9f25d0587a31081
       
     }
+
+    stage('Build Package')
+    {
+      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'Jdk-home', maven: 'MVN-home', mavenSettingsConfig: '', traceability: true)
+      { sh 'mvn package'}}
+
+    }
+
 
     stage('print a message')
     {
