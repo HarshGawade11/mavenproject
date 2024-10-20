@@ -32,7 +32,7 @@ pipeline
       steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
       { withSonarQubeEnv(credentialsId: 'Sonarqube' , installationName: 'Sonarqube') {
         
-         sh 'mvn clean -B -DskipTests Sonarqube:Sonarqube package'
+         sh 'mvn clean -B -DskipTests sonar:sonar package'
       }}}
 
     }
