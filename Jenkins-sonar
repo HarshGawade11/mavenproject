@@ -15,25 +15,31 @@ pipeline
 
     stage('compile code')
     {  
-      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true) 
-      { sh 'mvn compile'}}
+      steps{ 
+        withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true) 
+        { sh 'mvn compile'}
+      }
       
     }
 
     stage('Code testing')
     {  
-      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
-      { sh 'mvn test'}}
+      steps{ 
+        withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
+       { sh 'mvn test'}
+      }
       
     }
 
     stage('Build Package')
     {  
-      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
-      { withSonarQubeEnv(credentialsId: 'Sonarqube' , installationName: 'Sonarqube') {
-        
-         sh 'mvn clean -B -DskipTests sonar:sonar package'
-      }}}
+      steps{ 
+        withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
+        { withSonarQubeEnv(credentialsId: 'Sonarqube' , installationName: 'Sonarqube') 
+        {
+          sh 'mvn clean -B -DskipTests sonar:sonar package'
+        }}
+      }
 
     }   
   }
