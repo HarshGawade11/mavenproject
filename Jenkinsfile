@@ -30,7 +30,10 @@ pipeline
     stage('Build Package')
     {  agent{label 'JAVA'}
       steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
-      { sh 'mvn clean -B -DskipTests package'}}
+      { withSonarQubeEnv(credentialsId: 'Sonarqube' , Installationhome: 'Sonarqube') {
+        
+         sh 'mvn clean -B -DskipTests Sonarqube:Sonarqube package'
+      }}}
 
     }
 
