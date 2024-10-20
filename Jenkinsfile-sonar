@@ -1,27 +1,43 @@
+
 pipeline
 {
-agent any
-stages
-{
- stage('scm checkout')
- { steps { git branch: 'master', url: 'https://github.com/prakashk0301/mavenproject' }}
+  agent any
 
- stage('code compile')
- { steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true)  {
-	sh 'mvn compile'
- } }}
+  stages
+  {
+    stage('SCM Checkout')
+    { 
+      steps
+      {
+        git branch : 'master', url: 'https://github.com/HarshGawade11/mavenproject.git'
+      }
+    }
 
-  stage('execute unit test framework')
- { steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true)  {
-	sh 'mvn test'
- } }}
+    stage('compile code')
+    {  
+      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true) 
+      { sh 'mvn compile'}}
+      
+    }
 
-   stage('code build')
- { steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JDK_HOME', maven: 'MVN_HOME', mavenSettingsConfig: '', traceability: true) 
-  { withSonarQubeEnv(credentialsId: 'sonar', installationName: 'sonar') 
-   {
-	sh 'mvn clean -B -DskipTests sonar:sonar package' }
- } }}
+    stage('Code testing')
+    {  
+      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
+      { sh 'mvn test'}}
+      
+    }
 
-}
-}
+    stage('Build Package')
+    {  
+      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
+      { withSonarQubeEnv(credentialsId: 'Sonarqube' , installationName: 'Sonarqube') {
+        
+         sh 'mvn clean -B -DskipTests sonar:sonar package'
+      }}}
+
+    }
+  }
+} 
+
+
+  
