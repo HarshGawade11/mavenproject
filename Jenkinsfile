@@ -1,12 +1,12 @@
 
 pipeline
 {
-  agent any
+  agent none
 
   stages
   {
     stage('SCM Checkout')
-    { 
+    { agent{label : 'JAVA'}
       steps
       {
         git branch : 'master', url: 'https://github.com/HarshGawade11/mavenproject.git'
@@ -14,31 +14,30 @@ pipeline
     }
 
     stage('compile code')
-    {  
+    {  agent{label : 'JAVA'}
       steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true) 
       { sh 'mvn compile'}}
       
     }
 
     stage('Code testing')
-    {  
+    {  agent{label : 'JAVA'}
       steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
       { sh 'mvn test'}}
       
     }
 
     stage('Build Package')
-    {  
+    {  agent{label : 'JAVA'}
       steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
-      { withSonarQubeEnv(credentialsId: 'Sonarqube' , installationName: 'Sonarqube') {
-        
-         sh 'mvn clean -B -DskipTests sonar:sonar package'
-      }}}
+      
+        {sh 'mvn clean -B -DskipTests package'}
+      }
 
     }
 
     stage('Deploy Code')
-    {  
+    {  agent{label : 'JAVA'}
       steps{sshagent (['CICD']){
         sh 'scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@10.0.0.211:/usr/share/tomcat/webapps'}
       }
