@@ -33,7 +33,7 @@ stage('Verify Workspace') {
   }}
 
  stage('build docker image')
- {steps { sh 'docker build -t clouddevops12/myimage:281024  .' }}
+ {steps { sh 'docker build -t clouddevops12/myimage:281024 -f DockerFile  .' }}
 
  
 
