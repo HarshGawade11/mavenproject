@@ -5,7 +5,7 @@ LABEL Author = King
 ENV port 8080
 ENV dest /usr/local/tomcat/webapps/
 
-COPY /webapp/target/webapp.war $dest
+COPY webapp/target/webapp.war $dest
 
 EXPOSE $port
 
