@@ -1,12 +1,12 @@
 FROM tomcat:jdk21
 
-LABEL Author = Harsh
+LABEL Author = King
 
-ENV AppPort 8080
-ENV Workdir /usr/share/tomcat/webapps/
+ENV port 8080
+ENV dest /usr/local/tomcat/webapps/
 
-COPY /webapp/target/webapp.war $Workdir
+COPY /webapp/target/webapp.war $dest
 
-EXPOSE $AppPort
+EXPOSE $port
 
 CMD ["catalina.sh","run"]
