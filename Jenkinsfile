@@ -34,7 +34,7 @@ pipeline
     }
 
     stage('Deploy Code')
-    {  agent{label : 'JAVA'}
+    { 
       steps{sshagent (['CICD']){
         sh 'scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@10.0.0.211:/usr/share/tomcat/webapps'}
       }
