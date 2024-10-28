@@ -9,4 +9,4 @@ COPY /webapp/target/webapp.war $Workdir
 
 EXPOSE $AppPort
 
-CMD ["catelina.sh","run"]
+CMD ["catalina.sh","run"]
