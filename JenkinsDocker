@@ -35,7 +35,13 @@ stage('Verify Workspace') {
  stage('build docker image')
  {steps { sh 'docker build -t clouddevops12/myimage:281024  .' }}
 
+stage("Push Image to the Registry")
+{
+  steps{ withDockerRegistry(credentialsId: 'Docker', url: 'https://index.docker.io/v1/') {
 
+    sh 'docker push clouddevops12/myimage:281024'
+    
+}}}
 
  
 
