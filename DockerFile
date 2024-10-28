@@ -1,4 +1,4 @@
-FROM tomcat:jdk-21
+FROM tomcat:jdk21
 
 LABEL Author = Harsh
 
