@@ -28,7 +28,7 @@ steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-H
 
  stage('build docker image')
  {steps { sh 'ls -lrt'
-          sh 'docker build -t clouddevops12/devops:tomcat -f Dockerfile .' }}
+          sh 'docker build -t ' }}
 
  
 
