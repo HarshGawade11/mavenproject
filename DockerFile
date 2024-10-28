@@ -5,4 +5,8 @@ LABEL Author = Harsh
 ENV AppPort 8080
 ENV Workdir /usr/share/tomcat/webapps/
 
-COPY 
+COPY /webapp/target/webapp.war $Workdir
+
+EXPOSE $AppPort
+
+CMD ["catelina.sh","run"]
