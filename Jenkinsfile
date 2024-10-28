@@ -27,7 +27,7 @@ pipeline
       
     }
 
-    stage('Build Package')
+    stage('Build the Package')
     {  
       steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
       { sh 'mvn clean -B DskipTests package}}
