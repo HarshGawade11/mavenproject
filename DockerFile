@@ -1,0 +1,8 @@
+FROM tomcat:jdk-21
+
+LABEL Author = Harsh
+
+ENV AppPort 8080
+ENV Workdir /usr/share/tomcat/webapps/
+
+COPY 

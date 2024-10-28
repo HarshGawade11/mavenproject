@@ -6,7 +6,7 @@ pipeline
   stages
   {
     stage('SCM Checkout')
-    { 
+    {
       steps
       {
         git branch : 'master', url: 'https://github.com/HarshGawade11/mavenproject.git'
@@ -21,18 +21,26 @@ pipeline
     }
 
     stage('Code testing')
-    {  
+    { 
       steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
       { sh 'mvn test'}}
       
     }
 
-    stage('Build Package')
+    
+    
+    stage('Build Docker Image')
     {  
-      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
-      { sh 'mvn clean -B DskipTests package}}
+      steps{
+         sh "docker build -t "
+      }
     }
+      
 
+    
+
+
+    /*
     stage('Deploy Code')
     {  agent{label : 'JAVA'}
       steps{sshagent (['CICD']){
@@ -40,6 +48,7 @@ pipeline
       }
     }
     
+    */
 
   }
 }
