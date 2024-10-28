@@ -1,40 +1,35 @@
 pipeline
 {
-  agent any
+agent any
+stages
+{
+ stage('scm checkout')
+ { 
+  steps { git branch: 'master', url: 'https://github.com/HarshGawade11/mavenproject' }}
 
-  stages
-  {
-    stage('SCM Checkout')
-    {
-      steps
-      {
-        git branch : 'master', url: 'https://github.com/HarshGawade11/mavenproject.git'
-      }
-    }
+ stage('code compile')
+ { 
+steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)  {
+	sh 'mvn compile'
+ } }}
 
-    stage('compile code')
-    {  
-      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true) 
-      { sh 'mvn compile'}}
-      
-    }
+  stage('execute unit test framework')
+ {
+   steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)  {
+	sh 'mvn test'
+ } }}
 
-    stage('Code testing')
-    { 
-      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
-      { sh 'mvn test'}}
-      
-    }
+   stage('code build')
+ {
+   steps { withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)  {
+	sh 'mvn clean -B -DskipTests package'
+ } }}
 
-    stage('Build the Package')
-    {  
-      steps{ withMaven(globalMavenSettingsConfig: '', jdk: 'JAVA-HOME', maven: 'MVN-HOME', mavenSettingsConfig: '', traceability: true)
-      { sh 'mvn clean -B -DskipTests package'}}
-    }
 
-    stage('Build Docker Image')
-    {  
-      steps{ sh 'docker build -t clouddevops12/tomcat:281024 .'}
-    }
-  }
+ stage('build docker image')
+ {steps { sh 'docker build -t clouddevops12/devops:tomcat .' }}
+
+ 
+
+}
 }
