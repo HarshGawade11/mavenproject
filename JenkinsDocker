@@ -42,11 +42,6 @@ stage('Push image to Docker')
     sh 'docker push clouddevops12/project:281024'
 }}
 
-
 }
-
-
- 
-
 }
 }
