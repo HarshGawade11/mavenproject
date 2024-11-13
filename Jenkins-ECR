@@ -33,7 +33,7 @@ stage('Verify Workspace') {
   }}
 
  stage('build docker image')
- {steps { sh 'docker build -t 767397824203.dkr.ecr.ap-south-1.amazonaws.com/docker:tomcat .' }}
+ {steps { sh 'docker build -t 767397824203.dkr.ecr.ap-south-1.amazonaws.com/docker:tomcat -f DockerFile .' }}
 
 stage('Push image to Docker')
 {
